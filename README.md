@@ -1,4 +1,4 @@
-# 🎬 CineMatch — Sistema de Recomendação de Filmes e Séries
+# 🎬 Mindique — Sistema de Recomendação de Filmes e Séries
 
 ## Estrutura do Projeto
 
@@ -19,23 +19,6 @@ movie-recommender/
 ```
 
 ---
-
-## Configuração do .env  ← COMECE AQUI
-
-1. Copie o arquivo `.env.example` e renomeie para `.env`
-2. Abra o `.env` e preencha sua chave do TMDB:
-
-```env
-TMDB_API_KEY=sua_chave_aqui
-```
-
-**Como obter a chave TMDB (gratuita):**
-1. Crie uma conta em https://www.themoviedb.org
-2. Vá em Configurações → API → Criar → Uso pessoal
-3. Copie a chave "API Key (v3 auth)"
-
----
-
 ## Como Rodar
 
 ### 1. Instalar dependências
