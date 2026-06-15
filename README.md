@@ -13,8 +13,7 @@ movie-recommender/
 │   └── seed.py         # Popula o banco via TMDB API
 ├── frontend/
 │   └── index.html      # SPA (Tailwind CDN + Vanilla JS)
-├── .env.example        # ← COPIE PARA .env E PREENCHA A CHAVE
-├── requirements.txt
+├├── requirements.txt
 └── README.md
 ```
 
