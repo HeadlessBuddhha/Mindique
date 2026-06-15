@@ -6,8 +6,7 @@ class SurveyPayload(BaseModel):
     session_key: str
     genres: List[str]
     content_type: str
-    actors: List[str] = []
-    directors: List[str] = []
+    platforms: List[str] = []
 
 
 class FavoritePayload(BaseModel):
@@ -19,14 +18,15 @@ class MovieOut(BaseModel):
     tconst: str
     title: str
     type: str
-    year: Optional[int]
-    genres: Optional[str]
-    rating: Optional[float]
-    votes: Optional[int]
-    runtime: Optional[int]
-    actors: Optional[str]
-    directors: Optional[str]
-    poster_url: Optional[str]
+    year: Optional[int] = None
+    genres: Optional[str] = None
+    rating: Optional[float] = None
+    votes: Optional[int] = None
+    runtime: Optional[int] = None
+    actors: Optional[str] = None
+    directors: Optional[str] = None
+    poster_url: Optional[str] = None
+    platforms: Optional[str] = None
     is_favorite: bool = False
 
     class Config:

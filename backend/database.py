@@ -22,3 +22,18 @@ def get_db():
         yield db
     finally:
         db.close()
+
+
+def run_migrations():
+    """Adiciona colunas novas sem apagar dados existentes."""
+    from sqlalchemy import text
+    with engine.connect() as conn:
+        for table, col, typedef in [
+            ("movies",      "platforms", "TEXT"),
+            ("preferences", "platforms", "TEXT"),
+        ]:
+            try:
+                conn.execute(text(f"ALTER TABLE {table} ADD COLUMN {col} {typedef}"))
+                conn.commit()
+            except Exception:
+                pass  # coluna já existe

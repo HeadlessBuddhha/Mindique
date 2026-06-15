@@ -7,17 +7,18 @@ from backend.database import Base
 class Movie(Base):
     __tablename__ = "movies"
 
-    tconst    = Column(String, primary_key=True, index=True)
-    title     = Column(String, nullable=False, index=True)
-    type      = Column(String, nullable=False)       # movie | tvSeries
-    year      = Column(Integer, nullable=True)
-    genres    = Column(String, nullable=True)        # comma-separated
-    rating    = Column(Float, nullable=True)
-    votes     = Column(Integer, nullable=True)
-    runtime   = Column(Integer, nullable=True)       # minutes
-    actors    = Column(Text, nullable=True)          # comma-separated
-    directors = Column(Text, nullable=True)          # comma-separated
-    poster_url= Column(String, nullable=True)
+    tconst     = Column(String, primary_key=True, index=True)
+    title      = Column(String, nullable=False, index=True)
+    type       = Column(String, nullable=False)       # movie | tvSeries
+    year       = Column(Integer, nullable=True)
+    genres     = Column(String, nullable=True)        # comma-separated (inglês)
+    rating     = Column(Float, nullable=True)
+    votes      = Column(Integer, nullable=True)
+    runtime    = Column(Integer, nullable=True)
+    actors     = Column(Text, nullable=True)
+    directors  = Column(Text, nullable=True)
+    poster_url = Column(String, nullable=True)
+    platforms  = Column(String, nullable=True)        # comma-separated ex: "Netflix,Disney Plus"
 
 
 class User(Base):
@@ -36,10 +37,9 @@ class Preference(Base):
 
     id           = Column(Integer, primary_key=True, autoincrement=True)
     user_id      = Column(Integer, ForeignKey("users.id"), nullable=False)
-    genres       = Column(String, nullable=True)
-    content_type = Column(String, nullable=True)    # movie | tvSeries | both
-    actors       = Column(Text, nullable=True)
-    directors    = Column(Text, nullable=True)
+    genres       = Column(String, nullable=True)       # comma-separated (inglês)
+    content_type = Column(String, nullable=True)       # movie | tvSeries | both
+    platforms    = Column(String, nullable=True)       # comma-separated ex: "Netflix,Disney Plus"
 
     user = relationship("User", back_populates="preferences")
 

@@ -7,13 +7,15 @@ from fastapi.middleware.cors import CORSMiddleware
 from fastapi.staticfiles import StaticFiles
 from fastapi.responses import FileResponse
 
-from backend.database import engine
+from backend.database import engine, run_migrations
 from backend.models import Base
 from backend.endpoints import router
 
+# Cria tabelas e aplica migrações leves
 Base.metadata.create_all(bind=engine)
+run_migrations()
 
-app = FastAPI(title="CineMatch API", version="1.0.0")
+app = FastAPI(title="Mindique API", version="1.0.0")
 
 app.add_middleware(
     CORSMiddleware,
