@@ -1,163 +1,97 @@
 /* ══════════════════════════════════════════════════════
    BASE
 ══════════════════════════════════════════════════════ */
-* {
-  box-sizing: border-box;
-}
-
-body {
-  background: #0d0d14;
-  color: #e8e8f0;
-}
+* { box-sizing: border-box; }
+body { background: #0d0d14; color: #e8e8f0; }
 
 /* ══════════════════════════════════════════════════════
    SCROLLBAR
 ══════════════════════════════════════════════════════ */
-::-webkit-scrollbar {
-  width: 5px;
-}
-::-webkit-scrollbar-track {
-  background: #13131f;
-}
-::-webkit-scrollbar-thumb {
-  background: #2a2a45;
-  border-radius: 4px;
-}
+::-webkit-scrollbar { width: 5px; }
+::-webkit-scrollbar-track { background: #13131f; }
+::-webkit-scrollbar-thumb { background: #2a2a45; border-radius: 4px; }
 
 /* ══════════════════════════════════════════════════════
    ANIMAÇÕES
 ══════════════════════════════════════════════════════ */
-.fade-in {
-  animation: fadeIn 0.35s ease forwards;
-}
+.fade-in { animation: fadeIn .35s ease forwards; }
 @keyframes fadeIn {
   from { opacity: 0; transform: translateY(10px); }
   to   { opacity: 1; transform: translateY(0); }
 }
-
-.scale-in {
-  animation: scaleIn 0.3s cubic-bezier(0.34, 1.56, 0.64, 1) forwards;
-}
+.scale-in { animation: scaleIn .3s cubic-bezier(.34,1.56,.64,1) forwards; }
 @keyframes scaleIn {
-  from { opacity: 0; transform: scale(0.92); }
+  from { opacity: 0; transform: scale(.92); }
   to   { opacity: 1; transform: scale(1); }
 }
 
 /* ══════════════════════════════════════════════════════
    CARDS
 ══════════════════════════════════════════════════════ */
-.movie-card {
-  transition: transform 0.2s ease, box-shadow 0.2s ease;
-}
+.movie-card { transition: transform .2s ease, box-shadow .2s ease; }
 .movie-card:hover {
   transform: translateY(-4px) scale(1.015);
-  box-shadow: 0 12px 40px rgba(0, 0, 0, 0.7);
+  box-shadow: 0 12px 40px rgba(0,0,0,.7);
 }
 
 /* ══════════════════════════════════════════════════════
    CHIPS / TAGS
 ══════════════════════════════════════════════════════ */
 .tag-chip {
-  display: inline-flex;
-  align-items: center;
-  gap: 4px;
-  background: #1a1a2e;
-  border: 1px solid #2a2a45;
-  border-radius: 999px;
-  padding: 4px 12px;
-  font-size: 13px;
-  cursor: pointer;
-  transition: all 0.15s;
-  user-select: none;
+  display: inline-flex; align-items: center; gap: 4px;
+  background: #1a1a2e; border: 1px solid #2a2a45;
+  border-radius: 999px; padding: 4px 12px;
+  font-size: 13px; cursor: pointer;
+  transition: all .15s; user-select: none;
 }
-.tag-chip:hover {
-  border-color: #e2b04b;
-  color: #e2b04b;
-}
-.tag-chip.selected {
-  background: #e2b04b22;
-  border-color: #e2b04b;
-  color: #e2b04b;
-}
+.tag-chip:hover  { border-color: #e2b04b; color: #e2b04b; }
+.tag-chip.selected { background: #e2b04b22; border-color: #e2b04b; color: #e2b04b; }
 
 /* ══════════════════════════════════════════════════════
-   SIDEBAR — BOTÕES DE NAVEGAÇÃO
+   SIDEBAR — NAVEGAÇÃO
 ══════════════════════════════════════════════════════ */
 .nav-btn {
-  display: flex;
-  align-items: center;
-  gap: 10px;
-  padding: 10px 14px;
-  border-radius: 10px;
-  cursor: pointer;
-  transition: all 0.2s;
-  font-size: 14px;
-  font-weight: 500;
-  color: #6b6b8a;
+  display: flex; align-items: center; gap: 10px;
+  padding: 10px 14px; border-radius: 10px;
+  cursor: pointer; transition: all .2s;
+  font-size: 14px; font-weight: 500; color: #6b6b8a;
   border: 1px solid transparent;
 }
-.nav-btn:hover {
-  background: #1a1a2e;
-  color: #e8e8f0;
-}
-.nav-btn.active {
-  background: #1a1a2e;
-  color: #e2b04b;
-  border-color: #2a2a45;
-}
+.nav-btn:hover  { background: #1a1a2e; color: #e8e8f0; }
+.nav-btn.active { background: #1a1a2e; color: #e2b04b; border-color: #2a2a45; }
 
 /* ══════════════════════════════════════════════════════
    POSTERS
 ══════════════════════════════════════════════════════ */
-.poster-img {
-  object-fit: cover;
-  width: 100%;
-  height: 100%;
-}
-
+.poster-img { object-fit: cover; width: 100%; height: 100%; }
 .poster-placeholder {
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  width: 100%;
-  height: 100%;
-  background: linear-gradient(135deg, #1a1a2e, #0d0d14);
-  font-size: 40px;
+  display: flex; align-items: center; justify-content: center;
+  width: 100%; height: 100%;
+  background: linear-gradient(135deg,#1a1a2e,#0d0d14); font-size: 40px;
 }
 
 /* ══════════════════════════════════════════════════════
-   FAVORITO (CORAÇÃO)
+   FAVORITO
 ══════════════════════════════════════════════════════ */
-.heart-btn {
-  transition: all 0.2s cubic-bezier(0.34, 1.56, 0.64, 1);
-}
-.heart-btn.favorited {
-  color: #e2534b;
-}
-.heart-btn:hover {
-  transform: scale(1.25);
-}
+.heart-btn { transition: all .2s cubic-bezier(.34,1.56,.64,1); }
+.heart-btn.favorited { color: #e2534b; }
+.heart-btn:hover { transform: scale(1.25); }
 
 /* ══════════════════════════════════════════════════════
    BADGE DE NOTA
 ══════════════════════════════════════════════════════ */
 .rating-badge {
-  background: linear-gradient(135deg, #e2b04b, #b8893a);
-  color: #0d0d14;
-  font-weight: 700;
-  border-radius: 6px;
-  padding: 2px 7px;
-  font-size: 12px;
+  background: linear-gradient(135deg,#e2b04b,#b8893a);
+  color: #0d0d14; font-weight: 700; border-radius: 6px;
+  padding: 2px 7px; font-size: 12px;
 }
 
 /* ══════════════════════════════════════════════════════
-   SKELETON LOADING
+   SKELETON
 ══════════════════════════════════════════════════════ */
 .skeleton {
-  background: linear-gradient(90deg, #1a1a2e 25%, #222238 50%, #1a1a2e 75%);
-  background-size: 200% 100%;
-  animation: shimmer 1.4s infinite;
-  border-radius: 8px;
+  background: linear-gradient(90deg,#1a1a2e 25%,#222238 50%,#1a1a2e 75%);
+  background-size: 200% 100%; animation: shimmer 1.4s infinite; border-radius: 8px;
 }
 @keyframes shimmer {
   0%   { background-position: 200% 0; }
@@ -167,16 +101,107 @@ body {
 /* ══════════════════════════════════════════════════════
    MODAIS
 ══════════════════════════════════════════════════════ */
-.modal-backdrop {
-  background: rgba(0, 0, 0, 0.85);
-  backdrop-filter: blur(8px);
-}
+.modal-backdrop { background: rgba(0,0,0,.85); backdrop-filter: blur(8px); }
 
 /* ══════════════════════════════════════════════════════
-   GRID DE GÊNEROS
+   GRIDS
 ══════════════════════════════════════════════════════ */
 .genre-grid {
   display: grid;
-  grid-template-columns: repeat(auto-fill, minmax(110px, 1fr));
+  grid-template-columns: repeat(auto-fill, minmax(110px,1fr));
   gap: 8px;
 }
+
+/* ══════════════════════════════════════════════════════
+   FUNCIONALIDADE B — TOGGLE "FORA DA BOLHA"
+══════════════════════════════════════════════════════ */
+.bubble-toggle {
+  display: flex; align-items: center; justify-content: space-between;
+  padding: 10px 14px; border-radius: 10px; cursor: pointer;
+  border: 1px solid transparent; transition: all .2s;
+  font-size: 14px; font-weight: 500; color: #6b6b8a;
+}
+.bubble-toggle:hover { background: #1a1a2e; color: #e8e8f0; }
+.bubble-toggle.active { background: #e2b04b22; color: #e2b04b; border-color: #e2b04b44; }
+
+.toggle-switch {
+  width: 36px; height: 20px; background: #2a2a45;
+  border-radius: 999px; position: relative; transition: background .2s; flex-shrink: 0;
+}
+.toggle-switch::after {
+  content: ''; position: absolute; top: 3px; left: 3px;
+  width: 14px; height: 14px; border-radius: 50%;
+  background: #6b6b8a; transition: all .2s;
+}
+.bubble-toggle.active .toggle-switch { background: #e2b04b; }
+.bubble-toggle.active .toggle-switch::after { left: 19px; background: #0d0d14; }
+
+/* ══════════════════════════════════════════════════════
+   FUNCIONALIDADE C — FILTRO DE TEMPO
+══════════════════════════════════════════════════════ */
+.time-filter-wrap {
+  padding: 10px 14px 14px;
+  border-top: 1px solid #2a2a45;
+  margin-top: 4px;
+}
+.time-filter-wrap p {
+  font-size: 11px; font-weight: 600; color: #6b6b8a;
+  text-transform: uppercase; letter-spacing: .06em; margin-bottom: 8px;
+}
+.time-btns { display: flex; gap: 6px; flex-wrap: wrap; }
+.time-btn {
+  flex: 1; min-width: 0; padding: 5px 4px; border-radius: 8px;
+  background: #1a1a2e; border: 1px solid #2a2a45;
+  color: #6b6b8a; font-size: 11px; font-weight: 600;
+  cursor: pointer; transition: all .15s; text-align: center;
+  white-space: nowrap;
+}
+.time-btn:hover  { border-color: #e2b04b; color: #e2b04b; }
+.time-btn.active { background: #e2b04b22; border-color: #e2b04b; color: #e2b04b; }
+
+/* ══════════════════════════════════════════════════════
+   FUNCIONALIDADE A — SESSÃO EM GRUPO
+══════════════════════════════════════════════════════ */
+.person-block {
+  background: #13131f; border: 1px solid #2a2a45;
+  border-radius: 12px; padding: 16px;
+}
+.person-block h3 {
+  font-size: 13px; font-weight: 700; color: #e2b04b;
+  margin-bottom: 12px; letter-spacing: .03em;
+}
+.genre-scrollbox {
+  height: 10rem; border: 1px solid #2a2a45; border-radius: 8px;
+  background: #0d0d14; overflow-y: auto; padding: 8px;
+  display: flex; flex-direction: column; gap: 4px;
+}
+.genre-scroll-item {
+  padding: 5px 10px; border-radius: 6px; cursor: pointer;
+  font-size: 13px; color: #6b6b8a; transition: all .15s; user-select: none;
+}
+.genre-scroll-item:hover   { background: #1a1a2e; color: #e8e8f0; }
+.genre-scroll-item.selected { background: #e2b04b22; color: #e2b04b; }
+
+.group-banner {
+  background: #e2b04b22; border: 1px solid #e2b04b44;
+  border-radius: 10px; padding: 10px 16px;
+  display: flex; align-items: center; justify-content: space-between;
+  margin-bottom: 20px;
+}
+.group-banner span { font-size: 13px; font-weight: 600; color: #e2b04b; }
+.group-banner button {
+  font-size: 12px; color: #6b6b8a; cursor: pointer;
+  background: none; border: none; transition: color .15s;
+}
+.group-banner button:hover { color: #e8e8f0; }
+
+/* Checkbox estilizada */
+.styled-checkbox { display: flex; align-items: center; gap: 8px; cursor: pointer; }
+.styled-checkbox input[type="checkbox"] { display: none; }
+.styled-checkbox .check-box {
+  width: 16px; height: 16px; border: 1px solid #2a2a45;
+  border-radius: 4px; background: #0d0d14; flex-shrink: 0; transition: all .15s;
+  display: flex; align-items: center; justify-content: center; font-size: 10px;
+}
+.styled-checkbox input:checked + .check-box { background: #e2b04b; border-color: #e2b04b; color: #0d0d14; }
+.styled-checkbox span { font-size: 12px; color: #6b6b8a; }

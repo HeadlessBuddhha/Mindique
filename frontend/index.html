@@ -4,7 +4,6 @@
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>Mindique — Recomendações Personalizadas</title>
-
   <script src="https://cdn.tailwindcss.com"></script>
   <script>
     tailwind.config = {
@@ -12,170 +11,208 @@
       theme: {
         extend: {
           colors: {
-            surface:      '#0d0d14',
-            panel:        '#13131f',
-            card:         '#1a1a2e',
-            border:       '#2a2a45',
-            accent:       '#e2b04b',
-            'accent-dim': '#b8893a',
-            muted:        '#6b6b8a',
-            text:         '#e8e8f0',
+            surface: '#0d0d14', panel: '#13131f', card: '#1a1a2e',
+            border: '#2a2a45', accent: '#e2b04b', 'accent-dim': '#b8893a',
+            muted: '#6b6b8a', text: '#e8e8f0',
           },
-          fontFamily: { sans: ['Inter', 'system-ui', 'sans-serif'] },
-          boxShadow:  { card: '0 4px 24px rgba(0,0,0,0.5)' },
+          fontFamily: { sans: ['Inter','system-ui','sans-serif'] },
+          boxShadow: { card: '0 4px 24px rgba(0,0,0,0.5)' },
         },
       },
     };
   </script>
-
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
   <link rel="stylesheet" href="/static/style.css">
 </head>
-
 <body class="min-h-screen font-sans">
 
-  <!-- ══════════════════════ SURVEY MODAL ══════════════════════ -->
-  <div id="surveyModal" class="fixed inset-0 modal-backdrop z-50 flex items-center justify-center p-4 hidden">
-    <div class="bg-panel border border-border rounded-2xl w-full max-w-xl max-h-[90vh] overflow-y-auto scale-in">
-      <div class="p-8">
-
-        <div class="text-center mb-8">
-          <div class="text-4xl mb-3">🎬</div>
-          <h1 class="text-2xl font-bold text-text mb-1">Bem-vindo ao <span class="text-accent">Mindique!</span></h1>
-          <p class="text-muted text-sm">Conte um pouco sobre seus gostos para personalizarmos sua experiência</p>
+<!-- ═══════════════════ SURVEY MODAL ═══════════════════ -->
+<div id="surveyModal" class="fixed inset-0 modal-backdrop z-50 flex items-center justify-center p-4 hidden">
+  <div class="bg-panel border border-border rounded-2xl w-full max-w-xl max-h-[90vh] overflow-y-auto scale-in">
+    <div class="p-8">
+      <div class="text-center mb-8">
+        <div class="text-4xl mb-3">🎬</div>
+        <h1 class="text-2xl font-bold text-text mb-1">Bem-vindo ao <span class="text-accent">Mindique!</span></h1>
+        <p class="text-muted text-sm">Conte um pouco sobre seus gostos para personalizarmos sua experiência</p>
+      </div>
+      <div class="mb-6">
+        <h2 class="text-xs font-semibold text-muted uppercase tracking-wider mb-3">Gêneros preferidos</h2>
+        <div class="genre-grid" id="genreGrid"></div>
+      </div>
+      <div class="mb-6">
+        <h2 class="text-xs font-semibold text-muted uppercase tracking-wider mb-3">O que você prefere assistir?</h2>
+        <div class="flex gap-3">
+          <button class="ctype-btn flex-1 tag-chip justify-center py-3" data-value="movie">🎬 Filmes</button>
+          <button class="ctype-btn flex-1 tag-chip justify-center py-3" data-value="tvSeries">📺 Séries</button>
+          <button class="ctype-btn flex-1 tag-chip justify-center py-3 selected" data-value="both">✨ Ambos</button>
         </div>
+      </div>
+      <div class="mb-8">
+        <h2 class="text-xs font-semibold text-muted uppercase tracking-wider mb-3">Quais plataformas você assina?</h2>
+        <div class="genre-grid" id="platformGrid"></div>
+      </div>
+      <button onclick="submitSurvey()" class="w-full bg-accent hover:bg-accent-dim text-surface font-bold py-3.5 rounded-xl transition-colors text-base">
+        Começar a Explorar →
+      </button>
+    </div>
+  </div>
+</div>
 
-        <!-- Gêneros -->
-        <div class="mb-6">
-          <h2 class="text-xs font-semibold text-muted uppercase tracking-wider mb-3">Gêneros preferidos</h2>
-          <!-- data-genre guarda o valor em inglês; o texto visível é o label em português (gerado pelo JS) -->
-          <div class="genre-grid" id="genreGrid"></div>
+<!-- ═══════════════════ MOOD MODAL ═══════════════════ -->
+<div id="moodModal" class="fixed inset-0 modal-backdrop z-50 items-center justify-center p-4 hidden">
+  <div class="bg-panel border border-border rounded-2xl w-full max-w-md scale-in">
+    <div class="p-7">
+      <div class="flex items-center justify-between mb-2">
+        <h2 class="text-lg font-bold text-text">Como está seu humor?</h2>
+        <button onclick="closeMoodModal()" class="text-muted hover:text-text text-xl">✕</button>
+      </div>
+      <p class="text-xs text-muted mb-5">Sugestões baseadas no humor — independente dos seus gêneros favoritos.</p>
+      <div class="grid grid-cols-2 gap-3" id="moodGrid"></div>
+    </div>
+  </div>
+</div>
+
+<!-- ═══════════════════ LUCKY MODAL ═══════════════════ -->
+<div id="luckyModal" class="fixed inset-0 modal-backdrop z-50 items-center justify-center p-4 hidden">
+  <div class="bg-panel border border-border rounded-2xl w-full max-w-sm scale-in" id="luckyContent">
+    <div class="p-6 text-center"><div class="text-4xl mb-2">🎲</div><p class="text-muted text-sm">Carregando...</p></div>
+  </div>
+</div>
+
+<!-- ═══════════════════ GRUPO MODAL ═══════════════════ -->
+<div id="groupModal" class="fixed inset-0 modal-backdrop z-50 items-center justify-center p-4 hidden">
+  <div class="bg-panel border border-border rounded-2xl w-full max-w-2xl max-h-[90vh] overflow-y-auto scale-in">
+    <div class="p-7">
+      <div class="flex items-center justify-between mb-6">
+        <h2 class="text-lg font-bold text-text">🎭 Sessão em Grupo</h2>
+        <button onclick="closeGroupModal()" class="text-muted hover:text-text text-xl">✕</button>
+      </div>
+
+      <!-- Passo 1 -->
+      <div id="groupStep1">
+        <p class="text-muted text-sm mb-6">Quantas pessoas vão assistir juntas?</p>
+        <div class="flex items-center justify-center gap-6 mb-8">
+          <button onclick="changeGroupSize(-1)" class="w-12 h-12 rounded-full bg-card border border-border text-text text-xl hover:border-accent hover:text-accent transition-all">−</button>
+          <span id="groupSizeDisplay" class="text-4xl font-bold text-accent w-12 text-center">2</span>
+          <button onclick="changeGroupSize(1)" class="w-12 h-12 rounded-full bg-card border border-border text-text text-xl hover:border-accent hover:text-accent transition-all">+</button>
         </div>
-
-        <!-- Tipo de conteúdo -->
-        <div class="mb-6">
-          <h2 class="text-xs font-semibold text-muted uppercase tracking-wider mb-3">O que você prefere assistir?</h2>
-          <div class="flex gap-3">
-            <button class="ctype-btn flex-1 tag-chip justify-center py-3" data-value="movie">🎬 Filmes</button>
-            <button class="ctype-btn flex-1 tag-chip justify-center py-3" data-value="tvSeries">📺 Séries</button>
-            <button class="ctype-btn flex-1 tag-chip justify-center py-3 selected" data-value="both">✨ Ambos</button>
-          </div>
-        </div>
-
-        <!-- Plataformas -->
-        <div class="mb-8">
-          <h2 class="text-xs font-semibold text-muted uppercase tracking-wider mb-3">Quais plataformas você assina?</h2>
-          <!-- data-platform guarda o nome da plataforma; o texto visível inclui emoji + label (gerado pelo JS) -->
-          <div class="genre-grid" id="platformGrid"></div>
-        </div>
-
-        <button onclick="submitSurvey()"
-          class="w-full bg-accent hover:bg-accent-dim text-surface font-bold py-3.5 rounded-xl transition-colors text-base">
-          Começar a Explorar →
+        <p class="text-xs text-muted text-center mb-6">Mínimo 2 · Máximo 9 pessoas</p>
+        <button onclick="goGroupStep2()" class="w-full bg-accent hover:bg-accent-dim text-surface font-bold py-3 rounded-xl transition-colors">
+          Avançar →
         </button>
+      </div>
 
+      <!-- Passo 2 -->
+      <div id="groupStep2" class="hidden">
+        <div id="personBlocks" class="space-y-4 mb-6"></div>
+        <button onclick="calcGroupMatch()" class="w-full bg-accent hover:bg-accent-dim text-surface font-bold py-3 rounded-xl transition-colors">
+          🎯 Calcular Match
+        </button>
       </div>
     </div>
   </div>
+</div>
 
-  <!-- ══════════════════════ MOOD MODAL ══════════════════════ -->
-  <div id="moodModal" class="fixed inset-0 modal-backdrop z-50 items-center justify-center p-4 hidden">
-    <div class="bg-panel border border-border rounded-2xl w-full max-w-md scale-in">
-      <div class="p-7">
-        <div class="flex items-center justify-between mb-6">
-          <h2 class="text-lg font-bold text-text">Como está seu humor?</h2>
-          <button onclick="closeMoodModal()" class="text-muted hover:text-text transition-colors text-xl">✕</button>
-        </div>
-        <p class="text-xs text-muted mb-4">As sugestões serão baseadas no seu humor — independente dos seus gêneros favoritos.</p>
-        <div class="grid grid-cols-2 gap-3" id="moodGrid"></div>
+<!-- ═══════════════════ APP SHELL ═══════════════════ -->
+<div id="appShell" class="hidden flex min-h-screen">
+
+  <!-- SIDEBAR -->
+  <aside class="w-60 bg-panel border-r border-border flex flex-col fixed h-full z-10">
+    <div class="px-5 py-5 border-b border-border">
+      <div class="flex items-center gap-2.5">
+        <span class="text-2xl">🎬</span>
+        <span class="font-bold text-lg text-text">Mindique<span class="text-accent">!</span></span>
       </div>
+      <p class="text-xs text-muted mt-1">Recomendações personalizadas</p>
     </div>
-  </div>
 
-  <!-- ══════════════════════ LUCKY MODAL ══════════════════════ -->
-  <div id="luckyModal" class="fixed inset-0 modal-backdrop z-50 items-center justify-center p-4 hidden">
-    <div class="bg-panel border border-border rounded-2xl w-full max-w-sm scale-in" id="luckyContent">
-      <div class="p-6 text-center">
-        <div class="text-4xl mb-2">🎲</div>
-        <p class="text-muted text-sm">Carregando surpresa...</p>
-      </div>
-    </div>
-  </div>
+    <nav class="flex-1 p-3 space-y-1 overflow-y-auto">
+      <button class="nav-btn w-full active" data-view="explore" onclick="navigate('explore')">
+        <span>🔭</span> Explorar
+      </button>
+      <button class="nav-btn w-full" onclick="openLucky()">
+        <span>🎲</span> Indicação
+      </button>
+      <button class="nav-btn w-full" data-view="favorites" onclick="navigate('favorites')">
+        <span>❤️</span> Favoritos
+        <span id="favCount" class="ml-auto bg-card border border-border text-xs px-2 py-0.5 rounded-full text-muted hidden">0</span>
+      </button>
 
-  <!-- ══════════════════════ APP SHELL ══════════════════════ -->
-  <div id="appShell" class="hidden flex min-h-screen">
+      <div class="border-t border-border my-2"></div>
 
-    <!-- SIDEBAR -->
-    <aside class="w-60 bg-panel border-r border-border flex flex-col fixed h-full z-10">
-      <div class="px-5 py-5 border-b border-border">
+      <!-- B: Fora da Bolha -->
+      <div id="bubbleToggle" class="bubble-toggle" onclick="toggleBubble()">
         <div class="flex items-center gap-2.5">
-          <span class="text-2xl">🎬</span>
-          <span class="font-bold text-lg text-text">Mindique<span class="text-accent">!</span></span>
+          <span>🫧</span>
+          <span>Fora da Bolha</span>
         </div>
-        <p class="text-xs text-muted mt-1">Recomendações personalizadas</p>
+        <div class="toggle-switch"></div>
       </div>
 
-      <nav class="flex-1 p-3 space-y-1 overflow-y-auto">
-        <button class="nav-btn w-full active" data-view="explore" onclick="navigate('explore')">
-          <span>🔭</span> Explorar
-        </button>
-        <button class="nav-btn w-full" onclick="openLucky()">
-          <span>🎲</span> Indicação
-        </button>
-        <button class="nav-btn w-full" data-view="favorites" onclick="navigate('favorites')">
-          <span>❤️</span> Favoritos
-          <span id="favCount"
-            class="ml-auto bg-card border border-border text-xs px-2 py-0.5 rounded-full text-muted hidden">0</span>
-        </button>
-        <div class="border-t border-border my-2"></div>
-        <button class="nav-btn w-full" onclick="openMoodModal()">
-          <span>😌</span> Hoje estou...
-        </button>
-      </nav>
+      <!-- A: Sessão em Grupo -->
+      <button class="nav-btn w-full" onclick="openGroupModal()">
+        <span>🎭</span> Sessão em Grupo
+      </button>
 
-      <div class="p-4 border-t border-border">
-        <button onclick="resetProfile()"
-          class="text-xs text-muted hover:text-text transition-colors w-full text-left">⚙ Redefinir perfil</button>
+      <div class="border-t border-border my-2"></div>
+
+      <button class="nav-btn w-full" onclick="openMoodModal()">
+        <span>😌</span> Hoje estou...
+      </button>
+    </nav>
+
+    <!-- C: Filtro de Tempo -->
+    <div class="time-filter-wrap">
+      <p>Tempo Disponível</p>
+      <div class="time-btns">
+        <button class="time-btn" data-minutes="30"  onclick="setTimeFilter(this, 30)">30min</button>
+        <button class="time-btn" data-minutes="60"  onclick="setTimeFilter(this, 60)">1h</button>
+        <button class="time-btn" data-minutes="90"  onclick="setTimeFilter(this, 90)">1h30</button>
+        <button class="time-btn" data-minutes="9999" onclick="setTimeFilter(this, null)">2h+</button>
       </div>
-    </aside>
+    </div>
 
-    <!-- MAIN -->
-    <main class="ml-60 flex-1 p-8 overflow-y-auto min-h-screen">
+    <div class="p-4 border-t border-border">
+      <button onclick="resetProfile()" class="text-xs text-muted hover:text-text transition-colors w-full text-left">⚙ Redefinir perfil</button>
+    </div>
+  </aside>
 
-      <div class="mb-7 flex items-center justify-between">
-        <div id="pageTitle">
-          <h1 class="text-2xl font-bold text-text">Explorar</h1>
-          <p class="text-muted text-sm mt-0.5">Títulos selecionados para você</p>
-        </div>
-        <div id="moodBadge"
-          class="hidden bg-card border border-accent/30 text-accent text-xs px-3 py-1.5 rounded-full font-medium"></div>
+  <!-- MAIN -->
+  <main class="ml-60 flex-1 p-8 overflow-y-auto min-h-screen">
+    <div class="mb-7 flex items-center justify-between">
+      <div id="pageTitle">
+        <h1 class="text-2xl font-bold text-text">Explorar</h1>
+        <p class="text-muted text-sm mt-0.5">Títulos selecionados para você</p>
       </div>
+      <div id="moodBadge" class="hidden bg-card border border-accent/30 text-accent text-xs px-3 py-1.5 rounded-full font-medium"></div>
+    </div>
 
-      <div id="contentGrid"
-        class="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-4 xl:grid-cols-5 2xl:grid-cols-6 gap-5"></div>
+    <!-- Banner de sessão em grupo -->
+    <div id="groupBanner" class="group-banner hidden">
+      <span>🎭 Sessão em grupo ativa</span>
+      <button onclick="exitGroupSession()">Sair da sessão ✕</button>
+    </div>
 
-      <div id="emptyState" class="hidden text-center py-20">
-        <div class="text-5xl mb-4">🍿</div>
-        <h3 class="text-lg font-semibold text-text mb-2">Nenhum título encontrado</h3>
-        <p class="text-muted text-sm">Tente ajustar seus filtros ou humor</p>
-      </div>
+    <div id="contentGrid" class="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-4 xl:grid-cols-5 2xl:grid-cols-6 gap-5"></div>
 
-      <div class="mt-8 flex justify-center">
-        <button id="loadMoreBtn" onclick="loadMore()"
-          class="hidden bg-card border border-border hover:border-accent text-text px-8 py-3 rounded-xl font-medium transition-all hover:text-accent">
-          Carregar mais
-        </button>
-      </div>
+    <div id="emptyState" class="hidden text-center py-20">
+      <div class="text-5xl mb-4">🍿</div>
+      <h3 class="text-lg font-semibold text-text mb-2">Nenhum título encontrado</h3>
+      <p class="text-muted text-sm">Tente ajustar seus filtros</p>
+    </div>
 
-    </main>
-  </div>
+    <div class="mt-8 flex justify-center">
+      <button id="loadMoreBtn" onclick="loadMore()" class="hidden bg-card border border-border hover:border-accent text-text px-8 py-3 rounded-xl font-medium transition-all hover:text-accent">
+        Carregar mais
+      </button>
+    </div>
+  </main>
+</div>
 
-  <!-- TOAST -->
-  <div id="toast"
-    class="fixed bottom-6 right-6 z-50 bg-card border border-border rounded-xl px-5 py-3 text-sm font-medium shadow-card opacity-0 pointer-events-none transition-all duration-300 translate-y-2"></div>
+<!-- TOAST -->
+<div id="toast" class="fixed bottom-6 right-6 z-50 bg-card border border-border rounded-xl px-5 py-3 text-sm font-medium shadow-card opacity-0 pointer-events-none transition-all duration-300 translate-y-2"></div>
 
-  <script src="/static/app.js"></script>
-
+<script src="/static/app.js"></script>
 </body>
 </html>
